@@ -33,3 +33,11 @@ all_data.map do |event|
     address: event[:location_address],
     city: event[:location_city]})
 end
+
+Location.all.map do |location|
+  Event.all.each do |event|
+    if event.location_name == location.name
+      location.events<<event
+    end
+  end  
+end
