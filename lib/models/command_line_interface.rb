@@ -12,15 +12,15 @@ class CommandLineInterface
   #   puts "What is your name?"
   #   user_name = gets.chomp
   #   list_name = "#{user_name}'s Flatiron Event List"
-  #   puts "Let's create #{list_name}!"
+  #   puts "Let's work on #{list_name}!"
   #   user_event_list = UserEventList.find_or_create_by({user_name:user_name,list_name:list_name})
   # end
 
-  def my_list(my_events)
-    if my_events == "You have no events yet."
-      return my_events
+  def my_list(events)
+    if events == "You have no events yet."
+      return events
     else
-      event_names = my_events.all.map do |event|
+      event_names = events.map do |event|
         event.name
       end
     end
@@ -56,33 +56,42 @@ class CommandLineInterface
 
 
   def gets_user_input
+
     puts "What is your name?"
     user_name = gets.chomp
     list_name = "#{user_name}'s Flatiron Event List"
-    puts "Let's create #{list_name}!"
+    puts "Let's work on #{list_name}!"
     user_event_list = UserEventList.find_or_create_by({user_name:user_name,list_name:list_name})
-    my_events="You have no events yet."
+
+    if user_event_list.events==[]
+      my_events="You have no events yet."
+    else
+      my_events = user_event_list.events
+    end
+
     input = ""
 
-  until input=="EXIT"
-    input = @@prompt.select("Select one:", ["MY LIST", "ADD EVENT", "DELETE EVENT", "NEW USER", "EXIT"])
+    until input=="EXIT"
+      input = @@prompt.select("Select one:", ["MY LIST", "ADD EVENT", "DELETE EVENT", "NEW USER", "EXIT"])
 
-    if input == "ADD EVENT"
-      puts "Enter a date:"
-      date=gets.chomp
-      event_options= find_event_by_date(date)
-      my_events=add_event(user_event_list,event_options)
+      if input == "ADD EVENT"
+        puts "Enter a date:"
+        date=gets.chomp
+        event_options= find_event_by_date(date)
+        if event_options !=nil
+          my_events=add_event(user_event_list,event_options)
+        end
 
-    elsif input == "MY LIST"
-      my_event_names = my_list(my_events)
-      puts my_event_names
+      elsif input == "MY LIST"
+        my_event_names = my_list(my_events)
+        puts my_event_names
 
-    elsif input == "DELETE EVENT"
-      delete_event
+      elsif input == "DELETE EVENT"
+        delete_event
 
-    elsif input == "NEW USER"
-      gets_user_input
+      elsif input == "NEW USER"
+        gets_user_input
+      end
     end
   end
-end
 end

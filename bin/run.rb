@@ -3,5 +3,4 @@ require_relative '../lib/api_communicator.rb'
 
 new_cli = CommandLineInterface.new
 new_cli.greet
-# new_cli.new_user
 new_cli.gets_user_input
