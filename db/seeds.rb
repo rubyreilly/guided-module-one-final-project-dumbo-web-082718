@@ -19,26 +19,10 @@ manhattan_data=manhattan_data.translate_data
 
 all_data= dumbo_data + manhattan_data
 
-def date_converter(date)
-  year = date[0..3]
-  month= date[5..6]
-  day = date[8..9]
-  months_hash={"January"=>"01","February"=>"02","March"=>"03",
-    "April"=>"04","May"=>"05","June"=>"06",
-    "July"=>"07","August"=>"08","September"=>"09",
-    "October"=>"10","November"=>"11","December"=>"12"}
-  month = months_hash.find do |word,num|
-    num==month
-  end
-  month = month[0]
-  date = "#{month} #{day}, #{year}"
-  binding.pry
-end
 
 all_data.map do |event|
   Event.find_or_create_by({name:event[:name],
-    date:date_converter(event[:date]),
-    time:event[:time],
+    start:DateTime.parse(event[:date]+ " " +event[:time]),
     link:event[:link],
     organizer:event[:organizer],
     location_name:event[:location_name]})
