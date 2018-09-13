@@ -1,5 +1,6 @@
 require 'pry'
 require 'colorize'
+require 'artii'
 
 class CommandLineInterface
 
@@ -7,7 +8,10 @@ class CommandLineInterface
 
   def greet
     puts
-    puts "Welcome to the Flatiron School NY Event List App!".colorize(:light_cyan)
+    a = Artii::Base.new
+    puts 'FLATIRON SCHOOL NY'.colorize(:light_magenta)
+    puts a.asciify('EVENT LISTER').colorize(:light_cyan)
+    # puts "Welcome to the Flatiron School NY Event List App!".colorize(:light_cyan)
     puts
   end
 
@@ -26,7 +30,7 @@ class CommandLineInterface
           user_event_list.events<<event
         end
       end
-      user_event_list.events
+      user_event_list.events.uniq
     end
   end
 
