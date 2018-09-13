@@ -46,6 +46,7 @@ class CommandLineInterface
     else
       events.select do |event|
         if event==event_choice
+          # binding.pry
           user_event_list.events.delete(event)
         end
       end
@@ -164,7 +165,7 @@ class CommandLineInterface
           puts my_events
           puts
         else
-          delete_event(user_event_list)
+          my_events=delete_event(user_event_list)
         end
 
       end
